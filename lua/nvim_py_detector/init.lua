@@ -47,19 +47,22 @@ local function find_pipenv_venv()
 	return nil
 end
 
--- Function to set the pythonPath for Pyright
 local function set_python_path(venv_path)
 	if venv_path then
 		local python_path = venv_path .. "/bin/python"
 		if vim.fn.executable(python_path) == 1 then
-			vim.lsp.buf.set_config("pyright", {
-				settings = {
-					python = {
-						pythonPath = python_path,
-					},
-				},
-			})
-			print("Python path set to: " .. python_path)
+			-- Find the active Pyright LSP client
+			for _, client in ipairs(vim.lsp.get_clients({ bufnr = 0 })) do
+				if client.name == "pyright" then
+					client.config.settings.python.pythonPath = python_path
+					vim.lsp.buf_notify(0, "workspace/didChangeConfiguration", {
+						settings = client.config.settings,
+					})
+					print("Python path set to: " .. python_path)
+					return
+				end
+			end
+			print("Pyright LSP is not active.")
 		else
 			print("Python executable not found in: " .. venv_path)
 		end
@@ -67,7 +70,6 @@ local function set_python_path(venv_path)
 		print("No virtual environment found in the project")
 	end
 end
-
 -- Function to find and set the virtual environment
 local function find_and_set_venv()
 	local venv_path = find_venv() or find_poetry_venv() or find_pipenv_venv()
