@@ -70,5 +70,22 @@ end
 
 -- Function to find and set the virtual environment
 local function find_and_set_venv()
-	local venv_path = find_venv() or find_poetry_venv
+	local venv_path = find_venv() or find_poetry_venv() or find_pipenv_venv()
+	set_python_path(venv_path)
 end
+
+-- Setup function to be called from your Neovim configuration
+function M.setup()
+	-- Find and set the virtual environment
+	find_and_set_venv()
+
+	-- Optionally, you can set up an autocommand to re-check the virtual environment on entering a buffer
+	vim.api.nvim_create_autocmd("BufEnter", {
+		pattern = "*.py",
+		callback = function()
+			find_and_set_venv()
+		end,
+	})
+end
+
+return M
