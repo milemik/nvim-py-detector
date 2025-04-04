@@ -70,4 +70,4 @@ end
 
 -- Function to find and set the virtual environment
 local function find_and_set_venv()
-    local venv_
+    local venv_path = find_venv() or find_poetry_venv
