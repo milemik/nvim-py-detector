@@ -22,7 +22,7 @@ In the end it will detect location of virtual environment and add it to pyright.
 return {
     "milemik/nvim-py-detector"
     config = function()
-      require("nvim_venv_detector").setup()
+      require("nvim_py_detector").setup()
     end,
 }
 ```
