@@ -10,7 +10,7 @@ In the end it will detect location of virtual environment and add it to pyright.
 
 > INFO
 >
-> Make sure that you have ```pyright``` installed in your nvim using (Mason)[https://github.com/williamboman/mason.nvim] or some other tool. 
+> Make sure that you have ```pyright``` installed in your nvim using [Mason](https://github.com/williamboman/mason.nvim) or some other tool. 
 >
 
 
