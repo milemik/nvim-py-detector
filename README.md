@@ -20,7 +20,7 @@ In the end it will detect location of virtual environment and add it to pyright.
 -- ~/.config/nvim/lua/plugins/init.lua
 
 return {
-    "milemik/nvim-py-detector"
+    "milemik/nvim-py-detector",
     config = function()
       require("nvim_py_detector").setup()
     end,
